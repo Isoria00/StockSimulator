@@ -1,0 +1,64 @@
+ \\ ZeroDivisionError: integer division or modulo by zero
+__________________________________________________________________________________________________
+
+ \\ ValueError: invalid literal for int() with base 10: 'gf'
+__________________________________________________________________________________________________
+
+ Traceback (most recent call last):
+  File "c:\Users\isori\.vscode\Projects\Practice\StockSimulator.py", line 104, in <module>
+    main()
+  File "c:\Users\isori\.vscode\Projects\Practice\StockSimulator.py", line 89, in main
+    money, purchase_amount = buy_shares(stock_input, money)
+    ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object
+
+__________________________________________________________________________________________________
+
+ PS C:\Users\isori\.vscode\Projects\Practice>
+& C:/Users/isori/AppData/Local/Programs/Python/Python312/python.exe c:/Users/isori/.vscode/Projects/Practice/StockSimulator.py
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+1
+What stock would you like to buy?
+1:Bitcoin
+2:Nvidia
+3:Apple
+2
+Traceback (most recent call last):
+  File "c:\Users\isori\.vscode\Projects\Practice\StockSimulator.py", line 126, in <module>
+    main()
+  File "c:\Users\isori\.vscode\Projects\Practice\StockSimulator.py", line 91, in main
+    money, purchase_amount = buy_shares(stock_input, money)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\isori\.vscode\Projects\Practice\StockSimulator.py", line 22, in buy_shares
+    if money >= stock_price and money // stock_price != 0:
+                                ~~~~~~^^~~~~~~~~~~~~
+ZeroDivisionError: integer division or modulo by zero
+PS C:\Users\isori\.vscode\Projects\Practice>
+__________________________________________________________________________________________________
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+3
+Apple: 770
+Nvidia: 180
+Bitcoin: 12730
+
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+1
+What stock would you like to buy?
+1:Bitcoin
+2:Nvidia
+3:Apple
+1
+How much would you like to buy?
+You can buy up to 72 shares
+Money: 3749050
+Stock Price: 51370
+__________________________________________________________________________________________________
