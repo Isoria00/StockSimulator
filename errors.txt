@@ -62,3 +62,92 @@ You can buy up to 72 shares
 Money: 3749050
 Stock Price: 51370
 __________________________________________________________________________________________________
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+3
+Apple: 730
+Nvidia: 90
+Bitcoin: 68970
+
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+1
+What stock would you like to buy?
+1:Bitcoin
+2:Nvidia
+3:Apple
+2
+Not enough Money for this Stock!
+Traceback (most recent call last):
+  File "c:\Users\isori\.vscode\Projects\StockSimulator\StockSimulator.py", line 167, in <module>
+    main()
+  File "c:\Users\isori\.vscode\Projects\StockSimulator\StockSimulator.py", line 84, in main
+    money, purchase_amount = buy_shares(stock_input, money)
+    ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object
+PS C:\Users\isori\.vscode\Projects\StockSimulator>
+__________________________________________________________________________________________________
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+3
+Apple: 509 
+Nvidia: 1
+Bitcoin: 9949
+
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+1
+What stock would you like to buy?
+1:Bitcoin
+2:Nvidia
+3:Apple
+2
+How much would you like to buy?
+You can buy up to 40 shares
+Money: 5000
+Stock Price: 124
+__________________________________________________________________________________________________
+How much would you like to buy?
+You can buy up to 6 shares
+Money: 5704
+Stock Price: 919
+1
+Remaing Balance:  4785
+Bitcoin Shares 0
+
+Nvidia Shares 0
+
+Apple Shares 1
+
+Apple: 370
+Nvidia: 123
+Bitcoin: 47784
+
+What would you like to do next?
+1: Buy Stock
+2: Sell Stock
+3: Hold Stock
+1
+What stock would you like to buy?
+1:Bitcoin
+2:Nvidia
+3:Apple
+1
+Not enough Money for this Stock!
+Traceback (most recent call last):
+  File "c:\Users\isori\.vscode\Projects\StockSimulator\StockSimulator.py", line 167, in <module>
+    main()
+  File "c:\Users\isori\.vscode\Projects\StockSimulator\StockSimulator.py", line 84, in main
+    money, purchase_amount = buy_shares(stock_input, money)
+    ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object
+PS C:\Users\isori\.vscode\Projects\StockSimulator>
+__________________________________________________________________________________________________

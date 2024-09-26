@@ -8,13 +8,13 @@ import time
 
 def set_values():
         Bitcoin = random.randint(1,70001)
-        Bitcoin = round(Bitcoin, -1)
+        Bitcoin = round(Bitcoin)
          
         Nvidia = random.randint(1,251)
-        Nvidia = round(Nvidia, -1)
+        Nvidia = round(Nvidia)
     
         Apple = random.randint(1, 1001)
-        Apple = round(Apple, -1)
+        Apple = round(Apple)
 
         print(f"Apple: {Apple} \nNvidia: {Nvidia}\nBitcoin: {Bitcoin}\n")
         return Bitcoin, Nvidia, Apple
