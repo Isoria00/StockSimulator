@@ -155,7 +155,7 @@ def main():
                                         Bitcoin, Nvidia, Apple = set_values()
 
                                 else:
-                                        print("You don't have any shares!")
+                                        print("You don't have any shares!\n")
 
                 
                         case 3:
