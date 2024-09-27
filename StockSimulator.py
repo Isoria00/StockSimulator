@@ -33,7 +33,8 @@ def buy_shares(stock_price,money):
                                 print("Not valid amount")
 
         else:
-                print("Not enough Money for this Stock!")             
+                print("Not enough Money for this Stock!")
+                return None             
                                 
 def random_event():
         pass
@@ -58,18 +59,17 @@ def main():
         Bitcoin, Nvidia, Apple = set_values()
 
         while True:
-                
+                        
                 menu_input = int(input("What would you like to do next?\n1: Buy Stock\n2: Sell Stock\n3: Hold Stock\n"))
                 match menu_input:
                         #BUY OPTION
                         case 1:
                                 
                                 while True:
-                                        stock_input =  int(input("What stock would you like to buy?\n1:Bitcoin\n2:Nvidia\n3:Apple\n"))
+                                        stock_input =  int(input(f"What stock would you like to buy?\n1:Bitcoin: {Bitcoin}\n2:Nvidia: {Nvidia}\n3:Apple: {Apple}\n"))
                                         match stock_input:
                                                 case 1:
                                                         stock_input = Bitcoin
-                                                        
                                                         break
                                                 case 2:
                                                         stock_input = Nvidia
@@ -81,29 +81,28 @@ def main():
                                                         print("Invalid Input\n")
 
                 
-                                money, purchase_amount = buy_shares(stock_input, money)
-                                
-                                if stock_input == Bitcoin:
-                                        Bitcoin_shares +=purchase_amount
-                                        
-                                elif stock_input == Nvidia:
-                                        Nvidia_shares += purchase_amount
-                                        
-                                elif stock_input == Apple:
-                                        Apple_shares += purchase_amount
-                                        
-                                else:
-                                        print("Something Went Wrong Contact Gizmo")
-                                print("Bitcoin Shares", Bitcoin_shares,"\n")
-                                print("Nvidia Shares", Nvidia_shares,"\n")
-                                print("Apple Shares", Apple_shares,"\n")
+                                result = buy_shares(stock_input, money)
+                                if result is not None:
+                                        money, purchase_amount = result
+                                        if stock_input == Bitcoin:
+                                                Bitcoin_shares +=purchase_amount
+                                                
+                                        elif stock_input == Nvidia:
+                                                Nvidia_shares += purchase_amount
+                                                
+                                        elif stock_input == Apple:
+                                                Apple_shares += purchase_amount
+                                                
+                                        else:
+                                                print("Something Went Wrong Contact Gizmo")
+                                        print(f"Bitcoin Shares: {Bitcoin_shares}\nNvidia Shares: {Nvidia_shares}\nApple Shares: {Apple_shares}\n")
                                 Bitcoin, Nvidia, Apple = set_values()
                                 
                         # SELL OPTION
                         case 2:
                                 if Bitcoin_shares > 0 or Nvidia_shares > 0 or Apple_shares > 0:
                                         while True:
-                                                stock_input = int(input("What stock would you like to sell?\n1: Bitcoin\n2: Nvidia\n3: Apple\n"))
+                                                stock_input = int(input(f"What stock would you like to sell?\n1:Bitcoin: {Bitcoin}\n2:Nvidia: {Nvidia}\n3:Apple: {Apple}\n"))
                                                 match stock_input:
                                                         case 1:
                                                                 if Bitcoin_shares > 0:
@@ -136,7 +135,7 @@ def main():
                                                                 print("Invalid Input\n")
 
                                         while True:
-                                                amount_to_sell = int(input("How much would you like to sell?\n"))
+                                                amount_to_sell = int(input(f"How much would you like to sell?\n\n1:Bitcoin: {Bitcoin_shares}\n2:Nvidia: {Nvidia_shares}\n3:Apple: {Apple_shares}\n"))
                                                 if amount_to_sell <= total_amount_of_shares:
                                                         money, total_amount_of_shares = sell_shares(stock_input, money, total_amount_of_shares, amount_to_sell)
                                                         if stock_input == Bitcoin:
