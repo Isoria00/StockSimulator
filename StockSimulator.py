@@ -56,10 +56,10 @@ def main():
         Nvidia = 0
         Apple = 0
         
-        Bitcoin, Nvidia, Apple = set_values()
+        
 
         while True:
-                        
+                Bitcoin, Nvidia, Apple = set_values()   
                 menu_input = int(input("What would you like to do next?\n1: Buy Stock\n2: Sell Stock\n3: Hold Stock\n"))
                 match menu_input:
                         #BUY OPTION
@@ -96,7 +96,7 @@ def main():
                                         else:
                                                 print("Something Went Wrong Contact Gizmo")
                                         print(f"Bitcoin Shares: {Bitcoin_shares}\nNvidia Shares: {Nvidia_shares}\nApple Shares: {Apple_shares}\n")
-                                Bitcoin, Nvidia, Apple = set_values()
+
                                 
                         # SELL OPTION
                         case 2:
