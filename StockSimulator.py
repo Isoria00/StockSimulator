@@ -1,28 +1,41 @@
 import random
 import time
+import math
+import os
 
-# Bitcoin Range(0,70000)
-# Apple Range(0,250)
-# Nvidia Range(0,1000)
+# Bitcoin Range(16000,70000)
+# Nvidia Range(50,250)
+# Apple Range(400, 1500)
+
 # Randomizes the Stocks Price
 
+def clear_terminal():
+    os.system('cls')
+   
+
+
 def set_values():
-        Bitcoin = random.randint(1,70001)
+        clear_terminal()
+        Bitcoin = random.randint(16000,70000)
         Bitcoin = round(Bitcoin)
          
-        Nvidia = random.randint(1,251)
+        Nvidia = random.randint(50,250)
         Nvidia = round(Nvidia)
     
-        Apple = random.randint(1, 1001)
+        Apple = random.randint(400, 1500)
         Apple = round(Apple)
 
-        print(f"Apple: {Apple} \nNvidia: {Nvidia}\nBitcoin: {Bitcoin}\n")
+
+        
+        print(f"Bitcoin: {Bitcoin}\nNvidia: {Nvidia}\nApple: {Apple}\n_______________________________________________________\n")
         return Bitcoin, Nvidia, Apple
 
 # Check if player has enough money to buy stock and if so purchase shares of the stock ... Returns money and purchase amount to be added to share variables
 def buy_shares(stock_price,money):
         if money >= stock_price and money // stock_price != 0:
                 share_amount = money//stock_price
+                clear_terminal()
+                
                 while True:
                         purchase_amount = int(input(f"How much would you like to buy?\nYou can buy up to {share_amount} shares\nMoney: {money}\nStock Price: {stock_price}\n"))
                         if purchase_amount > 0 and purchase_amount <= share_amount:
@@ -35,9 +48,42 @@ def buy_shares(stock_price,money):
         else:
                 print("Not enough Money for this Stock!")
                 return None             
-                                
-def random_event():
-        pass
+                         
+
+def random_event(Bitcoin_shares, Apple_shares, Nvidia_shares):
+        randomizer = random.randint(1,10)
+        if randomizer > 8:
+                # Good Event
+                Bitcoin_shares = math.floor(Bitcoin_shares * 1.75)
+                Apple_shares = math.floor(Apple_shares * 1.75)
+                Nvidia_shares = math.floor(Nvidia_shares * 1.75)
+        
+        elif randomizer > 5 and randomizer <= 8:
+                # Good Event
+                Bitcoin_shares = math.floor(Bitcoin_shares * 1.25)
+                Apple_shares = math.floor(Apple_shares * 1.25)
+                Nvidia_shares = math.floor(Nvidia_shares * 1.25)
+        
+        elif randomizer > 2 and randomizer <=5:
+                # Good Event
+                Bitcoin_shares = math.floor(Bitcoin_shares * .75)
+                Apple_shares = math.floor(Apple_shares * .75)
+                Nvidia_shares = math.floor(Nvidia_shares * .75)
+        
+        elif randomizer >=1  and randomizer <=2:
+                # Good Event
+                Bitcoin_shares = math.floor(Bitcoin_shares * .50)
+                Apple_shares = math.floor(Apple_shares * .50)
+                Nvidia_shares = math.floor(Nvidia_shares * .50)
+        
+        
+        else:
+                # Bad Event
+                Bitcoin_shares = math.floor(Bitcoin_shares * .10)
+                Apple_shares = math.floor(Apple_shares * .10)
+                Nvidia_shares = math.floor(Nvidia_shares * .10)
+        
+        return Bitcoin_shares, Apple_shares, Nvidia_shares
 
 def sell_shares(stock_input, money, amount_of_shares, total_amount_of_shares):
         money += (amount_of_shares * stock_input)
@@ -59,14 +105,19 @@ def main():
         
 
         while True:
-                Bitcoin, Nvidia, Apple = set_values()   
+                Bitcoin, Nvidia, Apple = set_values() 
+                print(f"Bitcoin Shares: {Bitcoin_shares}\nNvidia Shares: {Nvidia_shares}\nApple Shares: {Apple_shares}\n_______________________________________________________\n")
+                print(F"MONEY: {money}\n_______________________________________________________\n")
                 menu_input = int(input("What would you like to do next?\n1: Buy Stock\n2: Sell Stock\n3: Hold Stock\n"))
                 match menu_input:
                         #BUY OPTION
                         case 1:
+                                clear_terminal()
+                                print(f"Bitcoin: {Bitcoin}\nNvidia: {Nvidia}\nApple: {Apple}\n_______________________________________________________\n")
+
                                 
                                 while True:
-                                        stock_input =  int(input(f"What stock would you like to buy?\n1:Bitcoin: {Bitcoin}\n2:Nvidia: {Nvidia}\n3:Apple: {Apple}\n"))
+                                        stock_input =  int(input(f"What stock would you like to buy?\n\nAvailable Money: {money}\n\n1:Bitcoin: {Bitcoin}\n2:Nvidia: {Nvidia}\n3:Apple: {Apple}\n"))
                                         match stock_input:
                                                 case 1:
                                                         stock_input = Bitcoin
@@ -156,10 +207,12 @@ def main():
                                 else:
                                         print("You don't have any shares!\n")
 
-                
+                        #HOLD OPTION
                         case 3:
-                                
                                 hold_stock()
+                                Bitcoin_shares, Apple_shares, Nvidia_shares = random_event(Bitcoin_shares,Apple_shares,Nvidia_shares)
+                                print(Bitcoin_shares, Apple_shares, Nvidia_shares)
+
                                 
                         case _:
                                 print("Invalid Input\n")
