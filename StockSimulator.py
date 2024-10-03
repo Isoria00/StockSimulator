@@ -11,7 +11,6 @@ import os
 
 def clear_terminal():
     os.system('cls')
-   
 
 
 def set_values():
@@ -90,8 +89,20 @@ def sell_shares(stock_input, money, amount_of_shares, total_amount_of_shares):
         total_amount_of_shares -= amount_of_shares
         return money, total_amount_of_shares
 
-def hold_stock():
-        Bitcoin, Nvidia, Apple = set_values()
+
+
+def menu_option_input():
+        while True:
+                try:
+                        menu_input = int(input("What would you like to do next?\n1: Buy Stock\n2: Sell Stock\n3: Hold Stock\n"))
+                except ValueError:
+                        print("Please Choose one of the Options")
+                        time.sleep(1)
+                        clear_terminal()
+                        continue
+                else:
+                        return menu_input
+
 
 def main():
         money = 5000
@@ -101,6 +112,8 @@ def main():
         Bitcoin = 0
         Nvidia = 0
         Apple = 0
+
+
         
         
 
@@ -108,7 +121,7 @@ def main():
                 Bitcoin, Nvidia, Apple = set_values() 
                 print(f"Bitcoin Shares: {Bitcoin_shares}\nNvidia Shares: {Nvidia_shares}\nApple Shares: {Apple_shares}\n_______________________________________________________\n")
                 print(F"MONEY: {money}\n_______________________________________________________\n")
-                menu_input = int(input("What would you like to do next?\n1: Buy Stock\n2: Sell Stock\n3: Hold Stock\n"))
+                menu_input = menu_option_input()
                 match menu_input:
                         #BUY OPTION
                         case 1:
@@ -209,7 +222,6 @@ def main():
 
                         #HOLD OPTION
                         case 3:
-                                hold_stock()
                                 Bitcoin_shares, Apple_shares, Nvidia_shares = random_event(Bitcoin_shares,Apple_shares,Nvidia_shares)
                                 print(Bitcoin_shares, Apple_shares, Nvidia_shares)
 

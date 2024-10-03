@@ -1,1 +1,0 @@
-Bug where if you dont have enough money to buy a stock it just resets the value of the stocks so that the user can exploit this to create advantagous prices without risking shares
