@@ -1,5 +1,5 @@
 import random
-# Only Stock Manipulation Allowed Here!
+
 
 class Stocks():
     def __init__(self, name , low, high, price, mean = None, stddev = None):
@@ -53,3 +53,4 @@ stock_list = [bitcoin, nvidia, apple, intel, jazmy, costco, tesla, meta, disney,
 
 def get_stocks():
     return stock_list
+
