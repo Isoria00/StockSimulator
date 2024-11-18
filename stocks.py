@@ -14,7 +14,7 @@ class Stocks():
 
 
     def __str__(self):
-        return f"{self.name}: Low = {self.low}, High = {self.high}, Current Price = {self.price}"
+        return f"{self.name}: Low = {self.low} - - - High = {self.high} - - - Current Price  - - - {self.price}"
 
 
 
