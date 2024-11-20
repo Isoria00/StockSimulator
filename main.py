@@ -3,16 +3,41 @@ from tkinter import *
 from tkinter import messagebox
 from stocks import *
 from player import *
+from tkinter import PhotoImage
+from PIL import Image, ImageTk
 
 class StockTradingGUI:
     def __init__(self, root):
         self.root = root
+
+        # Set the window size to the screen size
+        self.root.attributes("-fullscreen", True)  # Set fullscreen mode
+        self.root.bind("<Escape>", self.toggle_fullscreen)  # Bind Escape key to toggle fullscreen mode
+        
+
         self.root.title("Stock Trading Game")
         self.player = Player()
         self.rent = 0
         self.turn = 0
         self.previous_stock_prices = {stock.name: stock.price for stock in get_stocks()}
-        
+
+        # Path to the background image
+        image_path = r"C:\Users\isori\Downloads\DALL·E 2024-11-19 11.56.37 - A highly detailed illustration of a secret underground lair with a dimly lit atmosphere. The perspective is at the level of the back of a hooded figur.png"
+
+        try:
+            # Load and resize the image
+            bg_image_raw = Image.open(image_path)
+            bg_image_resized = bg_image_raw.resize((self.root.winfo_screenwidth(), self.root.winfo_screenheight()))
+            self.bg_image = ImageTk.PhotoImage(bg_image_resized)
+
+            # Create a Label widget to hold the image (make it a class attribute)
+            self.bg_label = tk.Label(self.root, image=self.bg_image)
+            self.bg_label.place(relwidth=1, relheight=1)  # Ensure the image fills the entire window
+        except Exception as e:
+            print(f"Error loading background image: {e}")
+            self.bg_image = None  # If image fails to load, this will be None
+            self.bg_label = None
+
         self.main_menu()
 
     def main_menu(self):
@@ -26,14 +51,33 @@ class StockTradingGUI:
         rent_label.pack(anchor="w", padx=10, pady=(0, 20))
 
         # Menu options
-        tk.Button(self.root, text="Check Stock Prices", command=self.check_stock_price, width=30, borderwidth=3).pack(pady=5)
-        tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history,width=30, borderwidth=3).pack(pady=5)
-        tk.Button(self.root, text="Buy Stock", command=self.display_stocks_for_buying,width=30, borderwidth=3).pack(pady=5)
+        tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history, width=30, borderwidth=3).pack(pady=5)
+        tk.Button(self.root, text="Buy Stock", command=self.display_stocks_for_buying, width=30, borderwidth=3).pack(pady=5)
         tk.Button(self.root, text="Sell Stock", command=self.display_stocks_for_selling, width=30, borderwidth=3).pack(pady=5)
-        tk.Button(self.root, text="Next Turn", command=self.next_turn,width=30, borderwidth=3).pack(pady=5)
-        tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares,width=30, borderwidth=3).pack(pady=5)
-        tk.Button(self.root, text="Exit Game", command=self.root.quit,width=30, borderwidth=3).pack(pady=5)
-        
+        tk.Button(self.root, text="Next Turn", command=self.next_turn, width=30, borderwidth=3).place(relx=.7, rely=.85)
+        tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares, width=30, borderwidth=3).pack(pady=5)
+        tk.Button(self.root, text="Resign Your Life to Them", command=self.quit, width=30, borderwidth=3).place(relx=.12, rely=.6)
+    
+    
+    def quit(self):
+        # Ask for confirmation before quitting
+        result = messagebox.askyesno("Exit Game", "Are you sure you sure about this?")
+        if result:  # If user clicks 'Yes'
+            self.root.quit()  # Close the window
+        else:
+            return  # If user clicks 'No', do nothing
+
+    
+    
+    def toggle_fullscreen(self, event=None):
+        current_state = self.root.attributes("-fullscreen")
+        self.root.attributes("-fullscreen", not current_state)
+        return "break"  # Prevents the default event handler
+
+    
+    
+    
+    
     def check_stock_price(self):
         self.clear_window()
         
@@ -321,7 +365,8 @@ class StockTradingGUI:
     def next_turn(self):
         self.turn += 1
         self.player.balance -= self.rent
-        self.rent += 1
+        self.rent += 100
+        
         
 
         # Update stock prices for the new turn
@@ -332,6 +377,14 @@ class StockTradingGUI:
         # Update previous prices to track changes
         self.previous_stock_prices = {stock.name: stock.price for stock in stocks}
 
+        if self.player.balance < 0:
+            answer = messagebox.showwarning("Your rent will be higher than your balance! Are you sure you want to continue, they will get you!")
+            if answer:  # If user clicks 'Yes'
+                messagebox.showerror("Game Over", "You ran out of funds.")
+                self.root.quit()  # Close the window
+        else:
+            return  # If user clicks 'No', do nothing
+
         # Check if balance is negative
         if self.player.balance < 0:
             messagebox.showerror("Game Over", "You ran out of funds.")
@@ -340,8 +393,10 @@ class StockTradingGUI:
             self.main_menu()
 
     def clear_window(self):
+        """Clear all widgets except the background image."""
         for widget in self.root.winfo_children():
-            widget.destroy()
+            if widget != self.bg_label:  # Do not remove the background label
+                widget.destroy()
 
 
 # Run the GUI

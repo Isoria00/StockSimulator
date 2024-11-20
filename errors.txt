@@ -1,0 +1,6 @@
+Next turn doesnt add rent number display
+
+When your about to lose it doesnt let you cancel 
+
+Sell stock still doesnt correctly show max you can Sell
+
