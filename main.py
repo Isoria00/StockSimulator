@@ -154,7 +154,7 @@ class StockTradingGUI:
 
         tk.Label(
             self.root,
-            text=f"Buying {stock.name} - ${stock.price:.2f} (Median: ${median_price:.2f}, "
+            text=f"Buying {stock.name} - ${stock.price:.2f} (Mean: ${median_price:.2f}, "
                 f"{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%)",
             font=("Arial", 16)
         ).pack(pady=20)
