@@ -5,6 +5,8 @@ from stocks import *
 from player import *
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
+import pygame
+
 
 class StockTradingGUI:
     def __init__(self, root):
@@ -17,6 +19,7 @@ class StockTradingGUI:
 
         self.root.title("Stock Trading Game")
         self.player = Player()
+        self.difficulty = 100
         self.rent = 0
         self.turn = 0
         self.previous_stock_prices = {stock.name: stock.price for stock in get_stocks()}
@@ -43,12 +46,13 @@ class StockTradingGUI:
     def main_menu(self):
         self.clear_window()
         
-        # Display balance and rent information
+        # Display balance information
         balance_label = tk.Label(self.root, text=f"Balance: ${self.player.balance:.2f}", font=("Arial", 14))
         balance_label.pack(anchor="w", padx=10)
         
-        rent_label = tk.Label(self.root, text=f"Current Rent: ${self.rent}", font=("Arial", 14))
-        rent_label.pack(anchor="w", padx=10, pady=(0, 20))
+        # Display rent information (initialize self.rent_label)
+        self.rent_label = tk.Label(self.root, text=f"Current Rent: ${self.rent}", font=("Arial", 14))
+        self.rent_label.pack(anchor="w", padx=10, pady=(0, 20))
 
         # Menu options
         tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history, width=30, borderwidth=3).pack(pady=5)
@@ -57,7 +61,7 @@ class StockTradingGUI:
         tk.Button(self.root, text="Next Turn", command=self.next_turn, width=30, borderwidth=3).place(relx=.7, rely=.85)
         tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares, width=30, borderwidth=3).pack(pady=5)
         tk.Button(self.root, text="Resign Your Life to Them", command=self.quit, width=30, borderwidth=3).place(relx=.12, rely=.6)
-    
+
     
     def quit(self):
         # Ask for confirmation before quitting
@@ -186,12 +190,17 @@ class StockTradingGUI:
                 self.player.record_transaction(stock_name, shares, stock.price, "Buy")
                 messagebox.showinfo("Purchase Success", f"Bought {shares} shares of {stock.name}.")
                 print(f"Owned stocks after purchase: {self.player.owned_stocks}")  # Print the dictionary for debugging
+                
+
             else:
                 messagebox.showerror("Error", "Insufficient funds.")
 
             self.main_menu()
         except ValueError:
             messagebox.showerror("Error", "Please select a valid number of shares.")
+    
+    
+
 
 
     def display_stocks_for_selling(self):
@@ -222,76 +231,59 @@ class StockTradingGUI:
     def sell_stock(self, stock):
         self.clear_window()
 
-        # Ensure you're comparing the stock name in lowercase
         stock_name = stock.name.lower()
-
+        
         # Check if the player owns this stock
         if stock_name in self.player.owned_stocks:
-            # Get the transaction history for this stock
-            transactions = [
-                t for t in self.player.transaction_history 
-                if t['stock'] == stock_name and t['action'] == 'Buy'
-            ]
-            
-            if transactions:
-                # Calculate the total cost and number of shares bought
-                total_cost = sum(t['shares'] * t['price'] for t in transactions)
-                total_shares = sum(t['shares'] for t in transactions)
-                
-                # Calculate the average purchase price
-                avg_purchase_price = total_cost / total_shares
+            owned_shares = self.player.owned_stocks[stock_name]
 
-                # Calculate the potential profit if selling at current price
-                potential_profit = (stock.price - avg_purchase_price) * total_shares
-                profit_text = f"Potential Profit: {'+' if potential_profit > 0 else ''}${potential_profit:.2f}"
+            # Ensure the slider is set with the correct maximum number of shares
+            if owned_shares > 0:
+                tk.Label(self.root, text=f"Sell {stock.name} - Current Price: ${stock.price:.2f}").pack(pady=10)
+                tk.Label(self.root, text=f"You own {owned_shares} shares").pack()
 
-                # Display stock information along with potential profit
-                tk.Label(
-                    self.root,
-                    text=f"Sell {stock.name} - Current Price: ${stock.price:.2f} (Avg Purchase Price: ${avg_purchase_price:.2f})\n{profit_text}",
-                    font=("Arial", 16)
-                ).pack(pady=20)
-                
-                # Ask for the number of shares to sell
-                max_shares = total_shares
-                tk.Label(self.root, text="Select number of shares to sell:").pack()
+                # Create a slider with the max value as the owned shares
+                shares_slider = tk.Scale(self.root, from_=0, to=owned_shares, orient=tk.HORIZONTAL)
+                shares_slider.pack(pady=20)
 
-                shares_slider = tk.Scale(self.root, from_=1, to=max_shares, orient=tk.HORIZONTAL)
-                shares_slider.pack(pady=10)
+                # Display dynamic revenue as slider moves
+                revenue_label = tk.Label(self.root, text=f"Total revenue: $0.00")
+                revenue_label.pack(pady=10)
 
-                # Show dynamic profit as slider value changes
-                profit_label = tk.Label(self.root, text=f"Potential Profit: ${shares_slider.get() * (stock.price - avg_purchase_price):.2f}")
-                profit_label.pack(pady=10)
+                def update_revenue(event):
+                    selected_shares = shares_slider.get()
+                    total_revenue = selected_shares * stock.price
+                    revenue_label.config(text=f"Total revenue: ${total_revenue:.2f}")
 
-                # Update the profit label dynamically as slider value changes
-                def update_profit_label(event):
-                    profit_label.config(text=f"Potential Profit: ${shares_slider.get() * (stock.price - avg_purchase_price):.2f}")
+                shares_slider.bind("<Motion>", update_revenue)
 
-                shares_slider.bind("<Motion>", update_profit_label)
+                # Add confirm sale button
+                tk.Button(self.root, text="Confirm Sale", command=lambda: self.process_sell(stock, shares_slider.get(), shares_slider)).pack(pady=10)
 
-                # Button to confirm the sell
-                tk.Button(self.root, text="Confirm Sell", command=lambda: self.process_sell(stock, shares_slider.get())).pack(pady=10)
+                # Add back to menu button
                 tk.Button(self.root, text="Back to Menu", command=self.main_menu).pack(pady=10)
+
             else:
-                # If no transaction history for the stock, show a message
-                tk.Label(self.root, text="You haven't bought this stock yet.").pack(pady=20)
-                tk.Button(self.root, text="Back to Menu", command=self.main_menu).pack(pady=10)
+                messagebox.showinfo("No Shares", "You don't have any shares of this stock to sell.")
+                self.main_menu()
         else:
-            # If the player doesn't own this stock
             tk.Label(self.root, text="You don't own this stock.").pack(pady=20)
             tk.Button(self.root, text="Back to Menu", command=self.main_menu).pack(pady=10)
+
 
 
     
     def sell_stock_shares(self, stock):
         self.clear_window()
 
+        # Get the number of shares the player owns
         owned_shares = self.player.owned_stocks.get(stock.name, 0)
         if owned_shares == 0:
             messagebox.showerror("Error", "You don't own any shares of this stock.")
             self.main_menu()
             return
 
+        # Show stock and revenue details
         tk.Label(self.root, text=f"Selling {stock.name} - ${stock.price:.2f} per share", font=("Arial", 16)).pack(pady=20)
         tk.Label(self.root, text=f"You own {owned_shares} shares.").pack()
 
@@ -299,27 +291,30 @@ class StockTradingGUI:
         revenue_label = tk.Label(self.root, text=f"Total revenue: ${stock.price:.2f}")
         revenue_label.pack(pady=10)
 
-        # Slider for selecting shares to sell
-        shares_slider = tk.Scale(self.root, from_=1, to=owned_shares, orient=tk.HORIZONTAL)
-
+        # Slider for selecting shares to sell (set maximum value to owned_shares)
+        shares_slider = tk.Scale(self.root, from_=0, to=owned_shares, orient=tk.HORIZONTAL)
+        
+        # Update the revenue label dynamically as the slider changes
         def update_revenue(event):
-            total_revenue = shares_slider.get() * stock.price
+            selected_shares = shares_slider.get()
+            total_revenue = selected_shares * stock.price
             revenue_label.config(text=f"Total revenue: ${total_revenue:.2f}")
 
         shares_slider.bind("<Motion>", update_revenue)
         shares_slider.pack(pady=10)
 
+        # Button to confirm the sale, passing the slider value as the number of shares to sell
         tk.Button(self.root, text="Confirm Sale",
-                command=lambda: self.process_sale(stock, shares_slider.get())).pack(pady=10)
+                command=lambda: self.process_sell(stock, shares_slider.get(), shares_slider)).pack(pady=10)
+
+        # Back to main menu button
         tk.Button(self.root, text="Back to Menu", command=self.main_menu).pack(pady=10)
 
-    
-
-    def process_sell(self, stock, shares_to_sell):
+    def process_sell(self, stock, shares_to_sell, shares_slider):
         try:
             # Ensure that the number of shares to sell is an integer
             shares_to_sell = int(shares_to_sell)
-            
+
             # Check if the player owns enough shares to sell
             stock_name = stock.name.lower()
             owned_shares = self.player.owned_stocks.get(stock_name, 0)
@@ -343,6 +338,11 @@ class StockTradingGUI:
 
                 # Show success message
                 messagebox.showinfo("Sale Success", f"Sold {shares_to_sell} shares of {stock.name}.")
+
+                # Update the share slider maximum and reset it to 0 (since you sold shares)
+                new_max = self.player.owned_stocks.get(stock.name, 0)
+                shares_slider.config(to=new_max)
+                shares_slider.set(0)  # Reset the slider to 0 after sale
             else:
                 # Handle the case where the player doesn't have enough shares to sell
                 messagebox.showerror("Error", f"You do not own {shares_to_sell} shares of {stock.name}.")
@@ -352,6 +352,8 @@ class StockTradingGUI:
         
         # Return to the main menu after processing the sale
         self.main_menu()
+
+
 
 
     def get_stock_shares(self):
@@ -365,10 +367,11 @@ class StockTradingGUI:
     def next_turn(self):
         self.turn += 1
         self.player.balance -= self.rent
-        self.rent += 100
         
         
-
+        # Update rent label
+        self.rent_label.config(text=f"Current Rent: ${self.rent}")
+        
         # Update stock prices for the new turn
         stocks = get_stocks()
         for stock in stocks:
@@ -377,20 +380,16 @@ class StockTradingGUI:
         # Update previous prices to track changes
         self.previous_stock_prices = {stock.name: stock.price for stock in stocks}
 
+        # Check if balance is negative
         if self.player.balance < 0:
-            answer = messagebox.showwarning("Your rent will be higher than your balance! Are you sure you want to continue, they will get you!")
+            answer = messagebox.askokcancel("Warning", "Your rent is higher than your balance! Continue?")
             if answer:  # If user clicks 'Yes'
                 messagebox.showerror("Game Over", "You ran out of funds.")
                 self.root.quit()  # Close the window
         else:
-            return  # If user clicks 'No', do nothing
-
-        # Check if balance is negative
-        if self.player.balance < 0:
-            messagebox.showerror("Game Over", "You ran out of funds.")
-            self.root.quit()
-        else:
             self.main_menu()
+            self.rent += self.difficulty  # Increment rent for the new turn
+
 
     def clear_window(self):
         """Clear all widgets except the background image."""
