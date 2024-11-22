@@ -206,10 +206,18 @@ class StockTradingGUI:
     def display_stocks_for_selling(self):
         self.clear_window()
 
+        # Display balance information
+        balance_label = tk.Label(self.root, text=f"Balance: ${self.player.balance:.2f}", font=("Arial", 14))
+        balance_label.pack(anchor="w", padx=10)
+        
+        # Display rent information (initialize self.rent_label)
+        self.rent_label = tk.Label(self.root, text=f"Current Rent: ${self.rent}", font=("Arial", 14))
+        self.rent_label.pack(anchor="w", padx=10, pady=(0, 20))
+
         # Get a list of stocks that the player owns
         owned_stocks = [
-            stock for stock in get_stocks()
-            if self.player.owned_stocks.get(stock.name.lower(), 0) > 0  # Ensure lowercase name lookup
+            stock for stock in get_stocks()  # Assuming get_stocks() returns a list of all available stocks
+            if self.player.owned_stocks.get(stock.name.lower(), 0) > 0  # Ensure lowercase name lookup for owned stocks
         ]
 
         if not owned_stocks:
@@ -221,11 +229,26 @@ class StockTradingGUI:
 
         # Create buttons for each owned stock
         for stock in owned_stocks:
-            stock_button = tk.Button(self.root, text=f"{stock.name}: {self.player.owned_stocks.get(stock.name.lower(), 0)} shares",  # Ensure lowercase lookup
+            quantity_owned = self.player.owned_stocks.get(stock.name.lower(), 0)
+            average_buy_price = self.player.owned_stocks.get(stock.name.lower(), 0)  # Get average buy price from player data
+
+            if average_buy_price == 0:  # Skip if no average price is available
+                continue
+            
+            # Calculate percentage change from average buy price
+            price_difference = stock.price - average_buy_price
+            percentage_change = (price_difference / average_buy_price) * 100
+            
+            # Display the stock info with the percentage change
+            stock_button = tk.Button(self.root, 
+                                    text=f"{stock.name}: {quantity_owned} shares "
+                                        f"@ ${stock.price:.2f} (Avg Buy: ${average_buy_price:.2f}) "
+                                        f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]",
                                     command=lambda s=stock: self.sell_stock(s))
             stock_button.pack(pady=5)
 
         tk.Button(self.root, text="Back to Menu", command=self.main_menu).pack(pady=20)
+
 
 
     def sell_stock(self, stock):
