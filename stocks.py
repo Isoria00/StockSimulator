@@ -38,18 +38,27 @@ class Stocks():
 
 
 jazmy = Stocks("Jazmy", 0.001, 5.00, 0.50, mean=0.0190, stddev=0.005)  
-cocacola = Stocks("Coca-Cola", 0.25, 67.20, 54.39, mean=40.00, stddev=5.00) 
-disney = Stocks("Disney", 1.19, 202.68, 81.34, mean=90.00, stddev=15.00)    
-meta = Stocks("Meta", 17.55, 384.33, 303.87, mean=250.00, stddev=50.00)     
-tesla = Stocks("Tesla", 3.10, 414.50, 245.34, mean=300.00, stddev=70.00)    
-costco = Stocks("Costco", 1.67, 571.49, 565.89, mean=500.00, stddev=100.00)  
-intel = Stocks("Intel", 25, 75.81, 34.88, mean=50.00, stddev=10.00)          
-apple = Stocks("Apple", 100, 198.23, 172.47, mean=150.00, stddev=20.00)      
-nvidia = Stocks("Nvidia", 50, 140.76, 122.61, mean=110.00, stddev=30.00)     
-bitcoin = Stocks("Bitcoin", 9000, 70000, 50000, mean=40000, stddev=20000)   
+
+cocacola = Stocks("Coca-Cola", 10, 100, 50, mean=50.00, stddev=10.00) 
+
+disney = Stocks("Disney", 30, 300, 81.34, mean=110.00, stddev=15.00)    
+
+meta = Stocks("Meta", 1500, 10000, 5000, mean=5000, stddev=2000)     
+
+tesla = Stocks("Tesla", 500, 5000, 2700, mean=2500.00, stddev=700)    
+
+costco = Stocks("Costco", 100, 1000, 500, mean=500.00, stddev=100.00)
+
+intel = Stocks("Intel", 1, 20, 10, mean=10.00, stddev=2.5)          
+
+apple = Stocks("Apple", 300, 3000, 1700, mean=1700, stddev=500)      
+
+nvidia = Stocks("Nvidia", 5000, 50000, 25000, mean=24000, stddev=15000)     
+
+bitcoin = Stocks("Bitcoin", 10000, 100000, 50000, mean=50000, stddev=25000)   
 
 
-stock_list = [bitcoin, nvidia, apple, intel, jazmy, costco, tesla, meta, disney, cocacola]
+stock_list = [bitcoin, nvidia, meta, tesla, apple, costco,  disney, cocacola, intel, jazmy]
 
 def get_stocks():
     return stock_list
