@@ -10,6 +10,18 @@ import os
 from achievements import update_player_progress
 
 
+def adjust_width(original_width, reference_width, current_width):
+    """
+    Adjust the width of an element based on the current screen width.
+    
+    :param original_width: The original width value of the element (e.g., 25 for the label).
+    :param reference_width: The width of the reference screen (e.g., 1920 for your monitor).
+    :param current_width: The width of the current screen (e.g., 800 for your laptop).
+    :return: The adjusted width for the element based on the current screen size.
+    """
+    width_ratio = current_width / reference_width
+    return int(original_width * width_ratio)
+
 
 def get_asset_path(*path_parts):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
@@ -112,6 +124,13 @@ class StockTradingGUI:
 
         
         self.angry_upstair_debt_collector = False                                       # Flag for Angry Door knocking when rent is over or equal to 5000
+
+
+        # Your reference screen width (e.g., for your monitor)
+        self.reference_width = 1920
+
+        # Get the current screen width dynamically
+        self.current_width = self.root.winfo_screenwidth()
 
         
         self.show_pre_menu()                                                            # Calls show_pre_menu function        
@@ -381,7 +400,7 @@ class StockTradingGUI:
 
         # Menu options
         tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history, width=22, bg="black", fg="white", font=("System", 12),   borderwidth=3).place(relx= .33, rely=.444)
-        tk.Button(self.root, text="Buy Stock", command=self.display_stocks_for_buying, width=18, bg="black", fg="green", font=("System", 12),  borderwidth=3).place(relx=.34, rely=.15)
+        tk.Button(self.root, text="Buy Stock", command=self.display_stocks_for_buying, width=adjust_width(18, self.reference_width, self.current_width), bg="black", fg="green", font=("System", 12),  borderwidth=3).place(relx=.34, rely=.15)
         tk.Button(self.root, text="Sell Stock", command=self.display_stocks_for_selling, width=18,bg="black", fg="red", font=("System", 12), borderwidth=3).place(relx= .68, rely= .15)
         tk.Button(self.root, text="Next Turn", command=self.next_turn, width=20, bg="black", fg="white", font=("System", 12),  borderwidth=3).place(relx=.7, rely=.85)
         tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares, width=18, bg="black", fg="white", font=("System", 12),  borderwidth=3).place(relx=.60, rely=.44)
