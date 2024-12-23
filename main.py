@@ -473,7 +473,7 @@ class StockTradingGUI:
         tk.Label(
         self.root,                                                                                                             # Click on a stock to buy label
         text="Click on a stock to buy shares", 
-        width=25, 
+        width=adjust_width(25, self.reference_width, self.current_width), 
         bg='black', 
         fg='white', 
         borderwidth=5, 
@@ -513,7 +513,7 @@ class StockTradingGUI:
                 color = 'red'  
 
            
-            stock_button = tk.Button(self.root, text=change_text, command=lambda s=stock: self.buy_stock(s), fg=color, width=25, bg='black', borderwidth=5, font=("System", 18))
+            stock_button = tk.Button(self.root, text=change_text, command=lambda s=stock: self.buy_stock(s), fg=color, width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, font=("System", 18))
             stock_button.pack(pady=5)
 
         tk.Button(self.root, text="Back to Menu", width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='red', font=("System", 18), command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=20)
