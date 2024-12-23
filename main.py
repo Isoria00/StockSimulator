@@ -22,6 +22,23 @@ def adjust_width(original_width, reference_width, current_width):
     width_ratio = current_width / reference_width
     return int(original_width * width_ratio)
 
+def adjust_font_size(original_font_size, reference_width, current_width):
+    """
+    Adjust the font size based on the screen width.
+    
+    :param original_font_size: The original font size value.
+    :param reference_width: The width of the reference screen (e.g., 1920 for your monitor).
+    :param current_width: The width of the current screen (e.g., 800 for your laptop).
+    :return: The adjusted font size based on the screen size.
+    """
+    # Calculate the width ratio
+    width_ratio = current_width / reference_width
+    # Adjust the font size based on the ratio
+    adjusted_font_size = int(original_font_size * width_ratio)
+    return adjusted_font_size
+
+
+
 
 def get_asset_path(*path_parts):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
@@ -132,6 +149,11 @@ class StockTradingGUI:
         # Get the current screen width dynamically
         self.current_width = self.root.winfo_screenwidth()
 
+    
+
+        
+
+
         
         self.show_pre_menu()                                                            # Calls show_pre_menu function        
 
@@ -151,7 +173,7 @@ class StockTradingGUI:
             self.settings_frame, 
             text=f"Difficulty: {difficulty_text}",  
             fg='white', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width),
             bg='black', 
             borderwidth=5, 
             font=("System", 22)
@@ -162,7 +184,7 @@ class StockTradingGUI:
             text="Change Difficulty", 
             command=lambda: self.change_difficulty(), 
             fg='white', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width),
             bg='black', 
             borderwidth=5, 
             font=("System", 22)
@@ -173,7 +195,7 @@ class StockTradingGUI:
             text="Back", 
             command=self.show_pre_menu, 
             fg='white', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width),
             bg='black', 
             borderwidth=5, 
             font=("System", 22)
@@ -212,7 +234,7 @@ class StockTradingGUI:
         tk.Label(self.frame,                                                            # Game Title
                  text="STOCKSIMULATOR",
                  fg='white',
-                 width=25,
+                 width=adjust_width(25, self.reference_width, self.current_width),
                  bg='black',
                  font=("System", 55)).pack(pady=20)
                 
@@ -223,7 +245,7 @@ class StockTradingGUI:
             text="Start Game", 
             command=lambda: (self.setup_main_background(), self.main_menu(), self.start_up_sounds()), 
             fg='white', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width),
             bg='black', 
             borderwidth=5, 
             font=("System", 22)
@@ -233,7 +255,7 @@ class StockTradingGUI:
             self.frame, 
             text="Settings", 
             fg='white', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width), 
             bg='black',
             command=self.settings_menu,
             borderwidth=5, 
@@ -244,7 +266,7 @@ class StockTradingGUI:
             self.frame,     
             text="Exit", 
             fg='red', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width), 
             bg='black', 
             borderwidth=5, 
             font=("System", 22),
@@ -340,7 +362,7 @@ class StockTradingGUI:
         self.root, 
         fg='red', 
         text='You Survived',
-        width=25, 
+        width=adjust_width(25, self.reference_width, self.current_width),
         bg='black',
         borderwidth=5, 
         font=("System", 22)
@@ -352,7 +374,7 @@ class StockTradingGUI:
             self.root, 
             text="Main Menu", 
             fg='red', 
-            width=25, 
+            width=adjust_width(25, self.reference_width, self.current_width),
             bg='black', 
             borderwidth=5, 
             font=("System", 22),
@@ -370,7 +392,7 @@ class StockTradingGUI:
     def main_menu(self):
        
         if self.player.balance >=1000000:
-            tk.Button(self.root, text="Pay Your Debt", command=self.win_condition, width=18, bg="green", fg="black", font=("System", 12),  borderwidth=3).place(relx=.12, rely=.5)
+            tk.Button(self.root, text="Pay Your Debt", command=self.win_condition, width=adjust_width(18, self.reference_width, self.current_width), bg="green", fg="black", font=("System", 12),  borderwidth=3).place(relx=.12, rely=.5)
 
         if self.rent >= 5000 and not self.angry_upstair_debt_collector:
             door_knocking_angry.play()
@@ -382,7 +404,7 @@ class StockTradingGUI:
         balance_label = tk.Label(
         self.root, 
         text=f"Balance: ${self.player.balance:,.2f}", 
-        width=31, 
+        width=adjust_width(31, self.reference_width, self.current_width), 
         bg='black', 
         fg='green', 
         relief=SUNKEN, 
@@ -528,7 +550,7 @@ class StockTradingGUI:
             self.root,
             text=f"Buying {stock.name} - ${stock.price:.2f} "
                 f"{'+' if percentage_change > 0 else ''}( {percentage_change:.2f}% )",
-             width=adjust_width(35, self.reference_width, self.current_width), bg='black', borderwidth=5, font=("System", 18), fg='white'
+             width=adjust_width(35, self.reference_width, self.current_width), bg='black', borderwidth=5, font=("System", adjust_font_size(18, self.reference_width, self.current_width)), fg='white'
         ).pack(pady=20)
 
         max_shares = int(self.player.balance // stock.price)
@@ -548,7 +570,7 @@ class StockTradingGUI:
 
         
         cost_label = tk.Label(self.root, 
-                              width=30, 
+                              width=adjust_width(30, self.reference_width, self.current_width),
                               bg='black', 
                               borderwidth=5, 
                               fg='white', 
@@ -750,7 +772,7 @@ class StockTradingGUI:
 
                 balance_label = tk.Label(self.root,
                          text=f"Balance: ${self.player.balance:.2f}",
-                         width=25, 
+                         width=adjust_width(25, self.reference_width, self.current_width), 
                          bg='black', 
                          borderwidth=5, 
                          fg='green', 
