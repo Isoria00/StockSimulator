@@ -499,7 +499,7 @@ class StockTradingGUI:
         bg='black', 
         fg='white', 
         borderwidth=5, 
-        font=("System", 18)).pack(pady=10)
+        font=("System",adjust_font_size(18, self.reference_width, self.current_width))).pack(pady=10)
         
         tk.Label(
         self.root, 
@@ -535,10 +535,10 @@ class StockTradingGUI:
                 color = 'red'  
 
            
-            stock_button = tk.Button(self.root, text=change_text, command=lambda s=stock: self.buy_stock(s), fg=color, width=25, bg='black', borderwidth=5, font=("System", 18))
+            stock_button = tk.Button(self.root, text=change_text, command=lambda s=stock: self.buy_stock(s), fg=color, width=25, bg='black', borderwidth=5, font=("System", adjust_font_size(18, self.reference_width, self.current_width)))
             stock_button.pack(pady=5)
 
-        tk.Button(self.root, text="Back to Menu", width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='red', font=("System", 18), command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=20)
+        tk.Button(self.root, text="Back to Menu", width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='red', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=20)
 
     def buy_stock(self, stock):
         self.clear_window()
@@ -554,7 +554,7 @@ class StockTradingGUI:
         ).pack(pady=20)
 
         max_shares = int(self.player.balance // stock.price)
-        tk.Label(self.root, text="Select number of shares to buy:",width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System", 18)).pack()
+        tk.Label(self.root, text="Select number of shares to buy:",width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width))).pack()
 
         shares_slider = tk.Scale(self.root, 
                                  from_=1, 
@@ -565,7 +565,7 @@ class StockTradingGUI:
                                  borderwidth=10, 
                                  fg='white', 
                                  length=1000,
-                                 font=("System", 18))
+                                 font=("System",adjust_font_size(18, self.reference_width, self.current_width)))
         shares_slider.pack(pady=10)
 
         
@@ -574,7 +574,7 @@ class StockTradingGUI:
                               bg='black', 
                               borderwidth=5, 
                               fg='white', 
-                              font=("System", 18), 
+                              font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                               text=f"Total Cost: ${shares_slider.get() * stock.price:.2f}")
         cost_label.pack(pady=10)
 
@@ -583,7 +583,7 @@ class StockTradingGUI:
                                 bg='black', 
                                 borderwidth=5, 
                                 fg='green', 
-                                font=("System", 18), 
+                                font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                                 text=f"Remaining Balance: ${self.player.balance:.2f}"
                                 )
         balance_label.pack(pady=10)
@@ -594,7 +594,7 @@ class StockTradingGUI:
                                 bg='black', 
                                 borderwidth=5, 
                                 fg='red', 
-                                font=("System", 18), 
+                                font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                                 text=f"Current Rent: ${self.rent}"
                                 )
         rent_label.pack(pady=10)
@@ -624,7 +624,7 @@ class StockTradingGUI:
                   bg='black', 
                   borderwidth=5, 
                   fg='green', 
-                  font=("System", 18), 
+                  font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                   command=lambda: [self.process_purchase(stock, shares_slider.get()), self.clear_window(), self.main_menu()]).pack(pady=10)
         tk.Button(self.root, 
                   text="Back to Menu", 
@@ -632,7 +632,7 @@ class StockTradingGUI:
                   bg='black', 
                   borderwidth=5, 
                   fg='red', 
-                  font=("System", 18),  
+                  font=("System",adjust_font_size(18, self.reference_width, self.current_width)),  
                   command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=10)
 
     def process_purchase(self, stock, shares):
@@ -673,7 +673,7 @@ class StockTradingGUI:
             self.main_menu()
             return
 
-        tk.Label(self.root, width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System", 18), text="Select a stock to sell:").pack(pady=10)
+        tk.Label(self.root, width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), text="Select a stock to sell:").pack(pady=10)
 
         
         for stock in owned_stocks:
@@ -708,13 +708,13 @@ class StockTradingGUI:
                         f"@ ${stock.price:.2f} (Avg Buy: ${avg_purchase_price:.2f}) "
                         f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]"
                     ),
-                    width=adjust_width(55, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System", 18), 
+                    width=adjust_width(55, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                     command=lambda s=stock: self.sell_stock(s)
                 )
                 stock_button.config(fg=color)  
                 stock_button.pack(pady=5)
 
-        tk.Button(self.root, text="Back to Menu", width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System", 18), command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=20)
+        tk.Button(self.root, text="Back to Menu", width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=20)
 
 
 
@@ -736,14 +736,14 @@ class StockTradingGUI:
                     width=adjust_width(35, self.reference_width, self.current_width), 
                     bg='black', 
                     borderwidth=5, 
-                    font=("System", 18), 
+                    font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                     fg='white', 
                     text=f"Sell {stock.name} - Current Price: ${stock.price:.2f}").pack(pady=10)
                 
                 tk.Label(self.root,width=adjust_width(25, self.reference_width, self.current_width), 
                          bg='black', 
                          borderwidth=5, 
-                         font=("System", 18), 
+                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                          fg='white', 
                          text=f"You own {owned_shares} shares").pack()
 
@@ -757,7 +757,7 @@ class StockTradingGUI:
                                          borderwidth=10, 
                                          fg='white', 
                                          length=1000,
-                                         font=("System", 18))
+                                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)))
                 shares_slider.pack(pady=20)
 
                 
@@ -766,7 +766,7 @@ class StockTradingGUI:
                                          bg='black', 
                                          borderwidth=5, 
                                          fg='white', 
-                                         font=("System", 18), 
+                                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                                          text=f"Total revenue: $0.00")
                 revenue_label.pack(pady=10)
 
@@ -776,7 +776,7 @@ class StockTradingGUI:
                          bg='black', 
                          borderwidth=5, 
                          fg='green', 
-                         font=("System", 18), 
+                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                          )
                 balance_label.pack(pady=10)
 
@@ -785,7 +785,7 @@ class StockTradingGUI:
                                 bg='black', 
                                 borderwidth=5, 
                                 fg='red', 
-                                font=("System", 18), 
+                                font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                                 text=f"Current Rent: ${self.rent}"
                                 )
                 rent_label.pack(pady=10)
@@ -819,7 +819,7 @@ class StockTradingGUI:
                           bg='black', 
                           borderwidth=5, 
                           fg='green', 
-                          font=("System", 18), 
+                          font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                           command=lambda: [self.process_sell(stock, shares_slider.get(), shares_slider), self.clear_window(), self.main_menu()]).pack(pady=10)
 
                 
@@ -829,7 +829,7 @@ class StockTradingGUI:
                           bg='black', 
                           borderwidth=5, 
                           fg='red', 
-                          font=("System", 18),  
+                          font=("System",adjust_font_size(18, self.reference_width, self.current_width)),  
                           command=lambda: [self.clear_window(), self.main_menu()]).pack(pady=10)
 
             else:
