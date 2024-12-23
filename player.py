@@ -1,6 +1,6 @@
 
 class Player:
-    def __init__(self, balance = 1000):
+    def __init__(self, balance = 500000000):
         self.balance = balance
         self.owned_stocks = {
             "jazmy": 0, 
@@ -29,7 +29,9 @@ class Player:
     
     
     def __str__(self):
-        # Return a string that shows the player's stats
+       
         stock_info = "\n".join(f"{stock.capitalize()}: {shares} shares" for stock, shares in self.owned_stocks.items())
         return f"Player Balance: ${self.balance:.2f}\nOwned Stocks:\n{stock_info}"
+    
+
     

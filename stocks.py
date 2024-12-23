@@ -37,25 +37,27 @@ class Stocks():
 
 
 
-jazmy = Stocks("Jazmy", 0.001, 5.00, 0.50, mean=0.0190, stddev=0.005)  
+jazmy = Stocks("JASMY", 0.001, 5.00, 0.50, mean=0.0190, stddev=0.010)  
 
-cocacola = Stocks("Coca-Cola", 10, 100, 50, mean=50.00, stddev=10.00) 
+bitcoin = Stocks("BTC", 10, 500111000, 100000, mean=100000, stddev=48000)  
 
-disney = Stocks("Disney", 30, 300, 81.34, mean=110.00, stddev=15.00)    
+nvidia = Stocks("NVDA", 5, 1001111000, 50000, mean=50000, stddev=19200)  
 
-meta = Stocks("Meta", 1500, 10000, 5000, mean=5000, stddev=2000)     
+meta = Stocks("META", 10, 100111000, 25000, mean=25000, stddev=8400)  
 
-tesla = Stocks("Tesla", 500, 5000, 2700, mean=2500.00, stddev=700)    
+tesla = Stocks("TSLA", 10, 50111000, 20000, mean=20000, stddev=5760)  
 
-costco = Stocks("Costco", 100, 1000, 500, mean=500.00, stddev=100.00)
+apple = Stocks("AAPL", 10, 10011100, 10000, mean=10000, stddev=3000)  
 
-intel = Stocks("Intel", 1, 20, 10, mean=10.00, stddev=2.5)          
+costco = Stocks("COSTCO", 50, 101111000, 5000, mean=5000, stddev=1200)  
 
-apple = Stocks("Apple", 300, 3000, 1700, mean=1700, stddev=500)      
+disney = Stocks("DISNEY", 30, 1111000, 1000, mean=1000, stddev=180)  
 
-nvidia = Stocks("Nvidia", 5000, 50000, 25000, mean=24000, stddev=15000)     
+cocacola = Stocks("COCA-COLA", 10, 5111100, 100, mean=100, stddev=12)  
 
-bitcoin = Stocks("Bitcoin", 10000, 100000, 50000, mean=50000, stddev=25000)   
+intel = Stocks("INTEL", 1, 11111200, 10, mean=10, stddev=1)
+
+
 
 
 stock_list = [bitcoin, nvidia, meta, tesla, apple, costco,  disney, cocacola, intel, jazmy]

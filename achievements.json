@@ -1,0 +1,61 @@
+{
+    "achievements": [
+        {
+            "id": "1",
+            "name": "Win on Easy Mode",
+            "description": "Win the game on easy mode.",
+            "criteria": {
+                "difficulty": "easy",
+                "win": true
+            },
+            "earned": false
+        },
+        {
+            "id": "2",
+            "name": "Win on Medium Mode",
+            "description": "Win the game on medium mode.",
+            "criteria": {
+                "difficulty": "medium",
+                "win": true
+            },
+            "earned": false
+        },
+        {
+            "id": "3",
+            "name": "Win on Hard Mode",
+            "description": "Win the game on hard mode.",
+            "criteria": {
+                "difficulty": "hard",
+                "win": true
+            },
+            "earned": true
+        },
+        {
+            "id": "4",
+            "name": "Beat the Game",
+            "description": "Beat the game, regardless of difficulty.",
+            "criteria": {
+                "win_game": true
+            },
+            "earned": true
+        },
+        {
+            "id": "5",
+            "name": "High Roller",
+            "description": "Invest a total of $1,000,000 in stocks.",
+            "criteria": {
+                "investment_total": 1000000
+            },
+            "earned": true
+        },
+        {
+            "id": "6",
+            "name": "High Risk",
+            "description": "Make an investment in a high-risk stock.",
+            "criteria": {
+                "high_risk_investment": true
+            },
+            "earned": true
+        }
+    ]
+}
