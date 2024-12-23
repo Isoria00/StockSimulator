@@ -708,7 +708,7 @@ class StockTradingGUI:
                         f"@ ${stock.price:.2f} (Avg Buy: ${avg_purchase_price:.2f}) "
                         f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]"
                     ),
-                    width=adjust_width(55, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
+                    width=adjust_width(55, self.reference_width, self.current_width), bg='black', borderwidth=5, wraplength=200, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                     command=lambda s=stock: self.sell_stock(s)
                 )
                 stock_button.config(fg=color)  
