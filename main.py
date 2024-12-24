@@ -421,11 +421,11 @@ class StockTradingGUI:
         self.rent_label.place(relx=.45, rely=.175)
 
         # Menu options
-        tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history, width=adjust_width(22, self.reference_width, self.current_width), bg="black", fg="white", font=("System", 12),   borderwidth=3).place(relx= .33, rely=.444)
+        tk.Button(self.root, text="Check Transaction History", command=self.check_transaction_history, width=22, bg="black", fg="white", font=("System", 12),   borderwidth=3).place(relx= .33, rely=.444)
         tk.Button(self.root, text="Buy Stock", command=self.display_stocks_for_buying, width=adjust_width(18, self.reference_width, self.current_width), bg="black", fg="green", font=("System", 12),  borderwidth=3).place(relx=.34, rely=.15)
         tk.Button(self.root, text="Sell Stock", command=self.display_stocks_for_selling, width=adjust_width(18, self.reference_width, self.current_width),bg="black", fg="red", font=("System", 12), borderwidth=3).place(relx= .68, rely= .15)
         tk.Button(self.root, text="Next Turn", command=self.next_turn, width=adjust_width(20, self.reference_width, self.current_width), bg="black", fg="white", font=("System", 12),  borderwidth=3).place(relx=.7, rely=.85)
-        tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares, width=adjust_width(18, self.reference_width, self.current_width), bg="black", fg="white", font=("System", 12),  borderwidth=3).place(relx=.60, rely=.44)
+        tk.Button(self.root, text="Check Shares Owned", command=self.get_stock_shares, width=18, bg="black", fg="white",wraplength=2000, font=("System", 12),  borderwidth=3).place(relx=.60, rely=.44)
         tk.Button(self.root, text="File For Bankruptcy", command=self.quit, width=adjust_width(30, self.reference_width, self.current_width), bg="black", fg="red", font=("System", 12),  borderwidth=3).place(relx=.12, rely=.6)
     '''def random_background_noises(self):
         sound =  [mouse_squeak.play(),]'''   
@@ -494,7 +494,7 @@ class StockTradingGUI:
 
         tk.Label(
         self.root,                                                                                                             # Click on a stock to buy label
-        text="Click on a stock to buy shares", 
+        text="Click on a stock to buy", 
         width=adjust_width(25, self.reference_width, self.current_width), 
         bg='black', 
         fg='white', 
@@ -509,7 +509,7 @@ class StockTradingGUI:
         fg='green', 
         relief=SUNKEN, 
         borderwidth=10, 
-        font=("System", 35)
+        font=("System", adjust_font_size(35, self.reference_width, self.current_width))
         ).pack(pady=20)
         
         stocks = get_stocks()                                                                                                           # returns stock 
@@ -523,14 +523,14 @@ class StockTradingGUI:
             
             if percentage_change > 0:
                 change_text = (
-                    f"{stock.name}: ${stock.price:.2f} "
-                    f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]"
+                    f"{stock.name}: ${stock.price:,.2f} "
+                    f"[{'+' if percentage_change > 0 else ''}{percentage_change:,.2f}%]"
                 )
                 color = 'green'  
             else:
                 change_text = (
-                    f"{stock.name}: ${stock.price:.2f} "
-                    f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]"
+                    f"{stock.name}: ${stock.price:,.2f} "
+                    f"[{'+' if percentage_change > 0 else ''}{percentage_change:,.2f}%]"
                 )
                 color = 'red'  
 
@@ -548,13 +548,13 @@ class StockTradingGUI:
 
         tk.Label(
             self.root,
-            text=f"Buying {stock.name} - ${stock.price:.2f} "
-                f"{'+' if percentage_change > 0 else ''}( {percentage_change:.2f}% )",
-             width=adjust_width(35, self.reference_width, self.current_width), bg='black', borderwidth=5, font=("System", adjust_font_size(18, self.reference_width, self.current_width)), fg='white'
+            text=f"Buying {stock.name} - ${stock.price:,.2f} "
+                f"{'+' if percentage_change > 0 else ''}( {percentage_change:,.2f}% )",
+             width=35, bg='black', borderwidth=5, font=("System", adjust_font_size(18, self.reference_width, self.current_width)), fg='white'
         ).pack(pady=20)
 
         max_shares = int(self.player.balance // stock.price)
-        tk.Label(self.root, text="Select number of shares to buy:",width=adjust_width(25, self.reference_width, self.current_width), bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width))).pack()
+        tk.Label(self.root, text="Select number of shares to buy:",width=25, bg='black', borderwidth=5, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width))).pack()
 
         shares_slider = tk.Scale(self.root, 
                                  from_=1, 
@@ -570,21 +570,21 @@ class StockTradingGUI:
 
         
         cost_label = tk.Label(self.root, 
-                              width=adjust_width(30, self.reference_width, self.current_width),
+                              width=30,
                               bg='black', 
                               borderwidth=5, 
                               fg='white', 
                               font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
-                              text=f"Total Cost: ${shares_slider.get() * stock.price:.2f}")
+                              text=f"Total Cost: ${shares_slider.get() * stock.price:,.2f}")
         cost_label.pack(pady=10)
 
         balance_label = tk.Label(self.root, 
-                                width=adjust_width(30, self.reference_width, self.current_width), 
+                                width=30, 
                                 bg='black', 
                                 borderwidth=5, 
                                 fg='green', 
                                 font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
-                                text=f"Remaining Balance: ${self.player.balance:.2f}"
+                                text=f"Remaining Balance: ${self.player.balance:,.2f}"
                                 )
         balance_label.pack(pady=10)
 
@@ -608,8 +608,8 @@ class StockTradingGUI:
             total_cost = shares_slider.get() * stock.price
             remaing_balance = self.player.balance - total_cost
             
-            cost_label.config(text=f"Total Cost: ${total_cost:.2f}")
-            balance_label.config(text=f'Remaing Balance: ${remaing_balance:.2f}')
+            cost_label.config(text=f"Total Cost: ${total_cost:,.2f}")
+            balance_label.config(text=f'Remaing Balance: ${remaing_balance:,.2f}')
         update_labels()    
 
 
@@ -705,10 +705,10 @@ class StockTradingGUI:
                     self.root,
                     text=(
                         f"{stock.name}: {quantity_owned} shares "
-                        f"@ ${stock.price:.2f} (Avg Buy: ${avg_purchase_price:.2f}) "
-                        f"[{'+' if percentage_change > 0 else ''}{percentage_change:.2f}%]"
+                        f"@ ${stock.price:,.2f} (Avg Buy: ${avg_purchase_price:,.2f}) "
+                        f"[{'+' if percentage_change > 0 else ''}{percentage_change:,.2f}%]"
                     ),
-                    width=adjust_width(55, self.reference_width, self.current_width), bg='black', borderwidth=5, wraplength=200, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
+                    width= 80, bg='black', borderwidth=5, wraplength=8000, fg='white', font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                     command=lambda s=stock: self.sell_stock(s)
                 )
                 stock_button.config(fg=color)  
@@ -733,17 +733,17 @@ class StockTradingGUI:
             if owned_shares > 0:
                 tk.Label(
                     self.root,
-                    width=adjust_width(35, self.reference_width, self.current_width), 
+                    width=35, 
                     bg='black', 
                     borderwidth=5, 
                     font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
                     fg='white', 
-                    text=f"Sell {stock.name} - Current Price: ${stock.price:.2f}").pack(pady=10)
+                    text=f"Sell {stock.name} - Current Price: ${stock.price:,.2f}").pack(pady=10)
                 
                 tk.Label(self.root,width=adjust_width(25, self.reference_width, self.current_width), 
                          bg='black', 
                          borderwidth=5, 
-                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
+                         font=("System",18), 
                          fg='white', 
                          text=f"You own {owned_shares} shares").pack()
 
@@ -766,12 +766,12 @@ class StockTradingGUI:
                                          bg='black', 
                                          borderwidth=5, 
                                          fg='white', 
-                                         font=("System",adjust_font_size(18, self.reference_width, self.current_width)), 
+                                         font=("System",18), 
                                          text=f"Total revenue: $0.00")
                 revenue_label.pack(pady=10)
 
                 balance_label = tk.Label(self.root,
-                         text=f"Balance: ${self.player.balance:.2f}",
+                         text=f"Balance: ${self.player.balance:,.2f}",
                          width=adjust_width(25, self.reference_width, self.current_width), 
                          bg='black', 
                          borderwidth=5, 
@@ -801,8 +801,8 @@ class StockTradingGUI:
             
             
             
-                    revenue_label.config(text=f"Total revenue: ${total_revenue:.2f}")
-                    balance_label.config(text=f"New Balance: {player_balance:.2f}")
+                    revenue_label.config(text=f"Total revenue: ${total_revenue:,.2f}")
+                    balance_label.config(text=f"New Balance: {player_balance:,.2f}")
 
                 
                 
@@ -853,11 +853,11 @@ class StockTradingGUI:
             return
 
         
-        tk.Label(self.root, text=f"Selling {stock.name} - ${stock.price:.2f} per share", font=("Arial", 16)).pack(pady=20)
+        tk.Label(self.root, text=f"Selling {stock.name} - ${stock.price:,.2f} per share", font=("Arial", 16)).pack(pady=20)
         tk.Label(self.root, text=f"You own {owned_shares} shares.").pack()
 
        
-        revenue_label = tk.Label(self.root, text=f"Total revenue: ${stock.price:.2f}")
+        revenue_label = tk.Label(self.root, text=f"Total revenue: ${stock.price:,.2f}")
         revenue_label.pack(pady=10)
 
        
@@ -867,7 +867,7 @@ class StockTradingGUI:
         def update_revenue(event):
             selected_shares = shares_slider.get()
             total_revenue = selected_shares * stock.price
-            revenue_label.config(text=f"Total revenue: ${total_revenue:.2f}")
+            revenue_label.config(text=f"Total revenue: ${total_revenue:,.2f}")
 
         shares_slider.bind("<Motion>", update_revenue)
         shares_slider.pack(pady=10)

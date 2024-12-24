@@ -1,6 +1,6 @@
 
 class Player:
-    def __init__(self, balance = 500000000):
+    def __init__(self, balance = 10000000):
         self.balance = balance
         self.owned_stocks = {
             "jazmy": 0, 

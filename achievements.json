@@ -28,7 +28,7 @@
                 "difficulty": "hard",
                 "win": true
             },
-            "earned": true
+            "earned": false
         },
         {
             "id": "4",
@@ -37,7 +37,7 @@
             "criteria": {
                 "win_game": true
             },
-            "earned": true
+            "earned": false
         },
         {
             "id": "5",
@@ -46,7 +46,7 @@
             "criteria": {
                 "investment_total": 1000000
             },
-            "earned": true
+            "earned": false
         },
         {
             "id": "6",
@@ -55,7 +55,7 @@
             "criteria": {
                 "high_risk_investment": true
             },
-            "earned": true
+            "earned": false
         }
     ]
 }
