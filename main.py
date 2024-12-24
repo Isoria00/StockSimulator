@@ -174,7 +174,7 @@ class StockTradingGUI:
             self.settings_frame, 
             text=f"Difficulty: {difficulty_text}",  
             fg='white', 
-            width=adjust_width(25, self.reference_width, self.current_width),
+            width=25,
             bg='black', 
             borderwidth=5, 
             font=("System", 22)
