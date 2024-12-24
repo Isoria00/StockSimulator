@@ -26,18 +26,12 @@ def check_achievements(player_data, achievements_data):
 
 def update_player_progress(player_data):
     
-    if player_data['difficulty'] == 300:
+    if player_data['difficulty'] == 150:
         player_data['difficulty'] = 'easy'
-    elif player_data['difficulty'] == 500:
+    elif player_data['difficulty'] == 300:
         player_data['difficulty'] = 'medium'
-    elif player_data['difficulty'] == 1000:
+    elif player_data['difficulty'] == 500:
         player_data['difficulty'] = 'hard'
-    elif player_data['difficulty'] == 1500:
-        player_data['difficulty'] = 'insane'
-    elif player_data['difficulty'] == 2000:
-        player_data['difficulty'] = 'wall street warrior'
-    elif player_data['difficulty'] == 3000:
-        player_data['difficulty'] = 'crypto prodigy'
 
     
     achievements_data = load_achievements()

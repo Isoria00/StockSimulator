@@ -8,7 +8,6 @@ import pygame
 import time
 import os
 from achievements import update_player_progress
-import json
 
 
 def adjust_width(original_width, reference_width, current_width):
@@ -126,14 +125,14 @@ class StockTradingGUI:
         self.root.title("Stock Trading Game")                                           # Title of the Window
         
         self.player = Player()                                                          # Initialize player settings (found in player.py)
-        self.difficulty = 500                                                           # This is the default difficulty of the game ($500 Rent increments per Turn)
+        self.difficulty = 300                                                           # This is the default difficulty of the game ($100 Rent increments per Turn)
         self.rent = 0                                                                   # Initialize default rent amount
         self.turn = 0                                                                   # Initialize turn 
         
         # self.previous_stock_prices = {stock.name: stock.price for stock in get_stocks()}            # Store previous stock prices
         
         self.difficulty_index = 1                                                       # Sets default difficulty index (This is for settings_menu() )
-        self.difficulty_list = ['easy','medium','hard','insane','wall street warrior','crypto prodigy']                                 # Also for settings_menu()
+        self.difficulty_list = ['easy','medium','hard']                                 # Also for settings_menu()
         
             
         power_outage.play()                                                             # Plays power outage sound
@@ -166,7 +165,7 @@ class StockTradingGUI:
         self.settings_frame = tk.Frame(self.root, bg='black')                           # Creates settings Frame
         self.settings_frame.place(relx=.5, rely=.5, anchor='center')
         
-        difficulty_text = ["Easy", "Medium", "Hard", "Insane", "Wall Street Warrior", "Crypto Prodigy"][self.difficulty_index]             # Set Difficulty level
+        difficulty_text = ["Easy", "Medium", "Hard"][self.difficulty_index]             # Set Difficulty level
         
     
 
@@ -205,11 +204,8 @@ class StockTradingGUI:
     def change_difficulty(self):                                                        
         self.difficulty_index +=1                                                       # Increment Difficulty Index
         
-        if self.difficulty_index == 6:                                                  # Set difficulty Based on Index
+        if self.difficulty_index == 3:                                                  # Set difficulty Based on Index
             self.difficulty_index = 0
-        
-        if self.difficulty_index == 0:
-            self.difficulty = 150
         
         if self.difficulty_index == 1:
             self.difficulty = 300
@@ -217,117 +213,14 @@ class StockTradingGUI:
         if self.difficulty_index == 2:
             self.difficulty = 500
         
-        if self.difficulty_index == 3:
-            self.difficulty = 750
-
-        if self.difficulty_index == 4:
-            self.difficulty = 1000
-
-        if self.difficulty_index == 5:
-            self.difficulty = 1500
-        
-    
-        
-        
+        if self.difficulty_index == 0:
+            self.difficulty = 150
         
         self.clear_window_settings()
         self.settings_menu()
 
 
-    def achievements(self):
-        
-        self.clear_window_settings()
-
-        
-        self.frame = tk.Frame(self.root, bg='black')
-        self.frame.place(relx=0.5, rely=0.5, anchor='center')
-
-        
-        tk.Label(
-            self.frame,
-            text="Achievements",
-            fg='white',
-            bg='black',
-            font=("System", 40)
-        ).pack(pady=20)
-
-        
-        with open("achievements.json", "r") as file:
-            data = json.load(file)
-            achievements = data.get("achievements", [])
-
-        
-        container = tk.Frame(self.frame, bg="black")
-        container.pack(fill="both", expand=True)
-
-        canvas = tk.Canvas(container, bg="black", highlightthickness=0)
-        scrollbar = tk.Scrollbar(container, orient="vertical", command=canvas.yview)
-        scrollable_frame = tk.Frame(canvas, bg="black")
-
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
-
-        canvas.pack(side="left", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
-
-        
-        for achievement in achievements:
-           
-            name = achievement.get("name", "Unknown")
-            description = achievement.get("description", "No description available")
-            earned = achievement.get("earned", False)
-
-            
-            status_color = "green" if earned else "red"
-            status_text = "Earned" if earned else "Not Earned"
-
-            
-            achievement_frame = tk.Frame(scrollable_frame, bg="black", pady=5)
-            achievement_frame.pack(fill="x", pady=5)
-
-           
-            tk.Label(
-                achievement_frame,
-                text=name,
-                fg="white",
-                bg="black",
-                font=("System", 20, "bold")
-            ).pack(anchor="w")
-
-            
-            tk.Label(
-                achievement_frame,
-                text=description,
-                fg="white",
-                bg="black",
-                font=("System", 16)
-            ).pack(anchor="w", padx=10)
-
-            
-            tk.Label(
-                achievement_frame,
-                text=status_text,
-                fg=status_color,
-                bg="black",
-                font=("System", 14, "italic")
-            ).pack(anchor="w", padx=10)
-
-        
-        tk.Button(
-            self.frame,
-            text="Back",
-            command=self.show_pre_menu,
-            fg='white',
-            bg='black',
-            font=("System", 18),
-            borderwidth=3
-        ).pack(pady=20)
-
-
+       
         
 
     def show_pre_menu(self):
@@ -371,18 +264,6 @@ class StockTradingGUI:
 
         tk.Button(                                                                      # 
             self.frame,     
-            text="Achievements", 
-            fg='white', 
-            width=adjust_width(25, self.reference_width, self.current_width), 
-            bg='black', 
-            borderwidth=5, 
-            font=("System", 22),
-            command=self.achievements
-            ).pack(pady=10)
-
-
-        tk.Button(                                                                      # 
-            self.frame,     
             text="Exit", 
             fg='red', 
             width=adjust_width(25, self.reference_width, self.current_width), 
@@ -391,8 +272,6 @@ class StockTradingGUI:
             font=("System", 22),
             command=quit
             ).pack(pady=10)
-        
-        
 
 
 
@@ -439,7 +318,8 @@ class StockTradingGUI:
             'difficulty': self.difficulty, 
             'win': True,  
             'win_game': True,  
-              
+            'investment_total': self.player.balance,  
+            'high_risk_investment': self.player.balance,  
         }
 
         
@@ -502,7 +382,7 @@ class StockTradingGUI:
             ).pack(pady=10, anchor='s', side="bottom")
         
         self.player = Player()
-        self.difficulty = 500
+        self.difficulty = 100
         self.rent = 0
         self.turn = 0
        
@@ -882,7 +762,7 @@ class StockTradingGUI:
 
                 
                 revenue_label = tk.Label(self.root, 
-                                         width=25, 
+                                         width=adjust_width(25, self.reference_width, self.current_width), 
                                          bg='black', 
                                          borderwidth=5, 
                                          fg='white', 
@@ -892,7 +772,7 @@ class StockTradingGUI:
 
                 balance_label = tk.Label(self.root,
                          text=f"Balance: ${self.player.balance:,.2f}",
-                         width=25, 
+                         width=adjust_width(25, self.reference_width, self.current_width), 
                          bg='black', 
                          borderwidth=5, 
                          fg='green', 

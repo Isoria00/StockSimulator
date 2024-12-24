@@ -2,7 +2,7 @@
     "achievements": [
         {
             "id": "1",
-            "name": "Beginners Luck",
+            "name": "Win on Easy Mode",
             "description": "Win the game on easy mode.",
             "criteria": {
                 "difficulty": "easy",
@@ -12,7 +12,7 @@
         },
         {
             "id": "2",
-            "name": "Bullish Beginnings",
+            "name": "Win on Medium Mode",
             "description": "Win the game on medium mode.",
             "criteria": {
                 "difficulty": "medium",
@@ -22,7 +22,7 @@
         },
         {
             "id": "3",
-            "name": "Risk Taker",
+            "name": "Win on Hard Mode",
             "description": "Win the game on hard mode.",
             "criteria": {
                 "difficulty": "hard",
@@ -32,40 +32,28 @@
         },
         {
             "id": "4",
-            "name": "High Roller",
-            "description": "Win the game on insane mode.",
+            "name": "Beat the Game",
+            "description": "Beat the game, regardless of difficulty.",
             "criteria": {
-                "difficulty": "insane",
-                "win": true
+                "win_game": true
             },
             "earned": false
         },
         {
             "id": "5",
-            "name": "Street Savvy",
-            "description": "Win the game on Wall Street Warrior mode.",
+            "name": "High Roller",
+            "description": "Invest a total of $1,000,000 in stocks.",
             "criteria": {
-                "difficulty": "wall street warrior",
-                "win": true
+                "investment_total": 1000000
             },
             "earned": false
         },
         {
             "id": "6",
-            "name": "The Blockchain Overlord",
-            "description": "Win the game on Crypto Prodigy mode.",
+            "name": "High Risk",
+            "description": "Make an investment in a high-risk stock.",
             "criteria": {
-                "difficulty": "crypto prodigy",
-                "win": true
-            },
-            "earned": false
-        },
-        {
-            "id": "7",
-            "name": "Beat the Game",
-            "description": "Beat the game, regardless of difficulty.",
-            "criteria": {
-                "win_game": true
+                "high_risk_investment": true
             },
             "earned": false
         }
