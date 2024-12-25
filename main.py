@@ -69,6 +69,8 @@ class StockTradingGUI:
     global power_outage
 
     global door_knocking_angry_end_game
+    
+    global man_screaming
 
 
 
@@ -94,6 +96,8 @@ class StockTradingGUI:
     power_outage = pygame.mixer.Sound(get_asset_path("sounds", "poweroutagesfx.MP3"))
     background_noise = pygame.mixer.Sound(get_asset_path("sounds", "scary-ambience-59002.MP3"))
     dripping_sound = pygame.mixer.Sound(get_asset_path("sounds", "drops-in-a-underground-parking-24705.MP3"))
+    man_screaming = pygame.mixer.Sound(get_asset_path("sounds", "man_screaming.MP3"))
+
 
 
     
@@ -549,8 +553,10 @@ class StockTradingGUI:
             walking_towards.play()
             time.sleep(3)
             shotgun_reload.play()
+
             time.sleep(3)
             shotgun_bang.play()
+            man_screaming.play()
             time.sleep(.5)
             tk.Label(self.root, text = "You died").pack()
             time.sleep(3)
