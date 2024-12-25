@@ -28,11 +28,11 @@ def update_player_progress(player_data):
         player_data['difficulty'] = 'medium'
     elif player_data['difficulty'] == 500:
         player_data['difficulty'] = 'hard'
-    elif player_data['difficulty'] == 750:
-        player_data['difficulty'] = 'insane'
-    elif player_data['difficulty'] == 1000:
-        player_data['difficulty'] = 'wall street warrior'
     elif player_data['difficulty'] == 1500:
+        player_data['difficulty'] = 'insane'
+    elif player_data['difficulty'] == 2000:
+        player_data['difficulty'] = 'wall street warrior'
+    elif player_data['difficulty'] == 2500:
         player_data['difficulty'] = 'crypto prodigy'
 
     

@@ -207,13 +207,13 @@ class StockTradingGUI:
             self.difficulty = 500
         
         if self.difficulty_index == 3:
-            self.difficulty = 750
+            self.difficulty = 1500
 
         if self.difficulty_index == 4:
-            self.difficulty = 1000
+            self.difficulty = 2000
 
         if self.difficulty_index == 5:
-            self.difficulty = 1500
+            self.difficulty = 2500
         
     
         
