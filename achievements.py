@@ -18,25 +18,21 @@ def check_achievements(player_data, achievements_data):
                 achievement['earned'] = True
             elif 'win_game' in achievement['criteria'] and player_data['win_game']:
                 achievement['earned'] = True
-            elif 'investment_total' in achievement['criteria'] and player_data['investment_total'] >= achievement['criteria']['investment_total']:
-                achievement['earned'] = True
-            elif 'high_risk_investment' in achievement['criteria'] and player_data['high_risk_investment']:
-                achievement['earned'] = True
 
 
 def update_player_progress(player_data):
     
-    if player_data['difficulty'] == 300:
+    if player_data['difficulty'] == 150:
         player_data['difficulty'] = 'easy'
-    elif player_data['difficulty'] == 500:
+    elif player_data['difficulty'] == 300:
         player_data['difficulty'] = 'medium'
-    elif player_data['difficulty'] == 1000:
+    elif player_data['difficulty'] == 500:
         player_data['difficulty'] = 'hard'
-    elif player_data['difficulty'] == 1500:
+    elif player_data['difficulty'] == 750:
         player_data['difficulty'] = 'insane'
-    elif player_data['difficulty'] == 2000:
+    elif player_data['difficulty'] == 1000:
         player_data['difficulty'] = 'wall street warrior'
-    elif player_data['difficulty'] == 3000:
+    elif player_data['difficulty'] == 1500:
         player_data['difficulty'] = 'crypto prodigy'
 
     
@@ -47,4 +43,3 @@ def update_player_progress(player_data):
     
     
     save_achievements(achievements_data)
-

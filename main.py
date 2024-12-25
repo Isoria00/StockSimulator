@@ -12,26 +12,11 @@ import json
 
 
 def adjust_width(original_width, reference_width, current_width):
-    """
-    Adjust the width of an element based on the current screen width.
-    
-    :param original_width: The original width value of the element (e.g., 25 for the label).
-    :param reference_width: The width of the reference screen (e.g., 1920 for your monitor).
-    :param current_width: The width of the current screen (e.g., 800 for your laptop).
-    :return: The adjusted width for the element based on the current screen size.
-    """
     width_ratio = current_width / reference_width
     return int(original_width * width_ratio)
 
 def adjust_font_size(original_font_size, reference_width, current_width):
-    """
-    Adjust the font size based on the screen width.
     
-    :param original_font_size: The original font size value.
-    :param reference_width: The width of the reference screen (e.g., 1920 for your monitor).
-    :param current_width: The width of the current screen (e.g., 800 for your laptop).
-    :return: The adjusted font size based on the screen size.
-    """
     # Calculate the width ratio
     width_ratio = current_width / reference_width
     # Adjust the font size based on the ratio
